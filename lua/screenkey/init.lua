@@ -17,11 +17,6 @@ local function create_window()
     if bufnr == -1 or not api.nvim_buf_is_valid(bufnr) then
         bufnr = api.nvim_create_buf(false, true)
     end
-end
-
-
-
-local function show_window()
     winnr = api.nvim_open_win(bufnr, false, Config.options.win_opts)
 
     if winnr == 0 then
@@ -50,10 +45,6 @@ local function clear_screenkey_buffer()
         table.insert(rep, "")
     end
     api.nvim_buf_set_lines(bufnr, 0, -1, false, rep)
-
-    if winnr ~= -1 and api.nvim_win_is_valid(winnr) then
-        api.nvim_win_close(winnr, true)
-    end
 end
 
 local function create_timer()
@@ -223,8 +214,6 @@ local function display_text()
     local padding =
         string.rep(" ", math.floor((Config.options.win_opts.width - api.nvim_strwidth(text)) / 2))
     local line = math.floor(Config.options.win_opts.height / 2)
-    if text == "" then return end
-    show_window()
     vim.schedule(function()
         if not active then
             return
